@@ -4,6 +4,7 @@ import React from "react";
 import TypeOne, { TypeOneCarousel } from "./cards/type.one";
 import TypeTwo from "./cards/type.two";
 import TypeThree from "./cards/type.three";
+import Image from "next/image";
 
 const bannerCards = [
   {
@@ -370,7 +371,7 @@ const MainContent: React.FC = () => {
       {/* New Launches Section */}
       <div className="mb-8">
         <h2 className="text-4.5 font-bold text-white mb-4 flex gap-2">
-          <img src="/icons/Home.svg" alt="home" />
+          <Image src="/icons/Home.svg" alt="home" />
           New Launches
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -384,7 +385,7 @@ const MainContent: React.FC = () => {
       {/* Live Casino Section */}
       <div className="mb-8">
         <h2 className="text-4.5 font-bold text-white mb-4 flex gap-2">
-          <img src="/icons/Casino1.svg" alt="home" />
+          <Image src="/icons/Casino1.svg" alt="home" />
           Live Casino
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -402,7 +403,7 @@ const MainContent: React.FC = () => {
       {/* Hash Section */}
       <div className="mb-8">
         <h2 className="text-4.5 font-bold text-white mb-4 flex gap-2">
-          <img src="/icons/Hash.svg" alt="hash" />
+          <Image src="/icons/Hash.svg" alt="hash" />
           Hash</h2>
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           {[1, 2, 3, 4, 5].map((item) => (
@@ -424,7 +425,7 @@ const MainContent: React.FC = () => {
       {/* Slots Section */}
       <div className="mb-8">
         <h2 className="text-4.5 font-bold text-white mb-4 flex gap-2">
-          <img src="/icons/Slots.svg" alt="slots" />
+          <Image src="/icons/Slots.svg" alt="slots" />
           Slots
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -442,7 +443,7 @@ const MainContent: React.FC = () => {
       {/* P/F Futures Section */}
       <div className="mb-8">
         <h2 className="text-4.5 font-bold text-white mb-4 flex gap-2">
-          <img src="/icons/Futures1.svg" alt="future" />
+          <Image src="/icons/Futures1.svg" alt="future" />
           P/F Futures
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
@@ -458,7 +459,7 @@ const MainContent: React.FC = () => {
             <div key={crypto.name} className="bg-gray-800 rounded-lg p-4">
               <div>
                 <div className="flex items-center mb-2">
-                  <img src={"/icons/coin-icon/"+crypto.name+".svg"} alt={`${crypto.name} coin`} className="w-8 h-8 mr-2" />
+                  <Image src={"/icons/coin-icon/"+crypto.name+".svg"} alt={`${crypto.name} coin`} className="w-8 h-8 mr-2" />
                   <h3 className="text-white font-semibold">{crypto.name}</h3>
                 </div>
                 <p className="text-[#A7B5CA] text-[14px]">Price</p>
@@ -475,7 +476,7 @@ const MainContent: React.FC = () => {
       {/* Cryptogra Section */}
       <div className="mb-8">
         <h2 className="text-4.5 font-bold text-white mb-4 flex gap-2">
-          <img src="/icons/Cryptogra1.svg" alt="cryptogra" />
+          <Image src="/icons/Cryptogra1.svg" alt="cryptogra" />
           Cryptogra</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {card4.map((item) => (
@@ -487,7 +488,7 @@ const MainContent: React.FC = () => {
       {/* Sport Section */}
       <div className="mb-8">
         <h2 className="text-4.5 font-bold text-white mb-4 flex gap-2">
-          <img src="/icons/Sport.svg" alt="Sport" />
+          <Image src="/icons/Sport.svg" alt="Sport" />
           Sport
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -500,7 +501,7 @@ const MainContent: React.FC = () => {
       {/* Chess and cards Section */}
       <div className="mb-8">
         <h2 className="text-4.5 font-bold text-white mb-4 flex gap-2">
-          <img src="/icons/tablegame.svg" alt="tablegame" />
+          <Image src="/icons/tablegame.svg" alt="tablegame" />
           Chess and cards</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {card6.map((item) => (
@@ -572,7 +573,7 @@ const MainContent: React.FC = () => {
           {[1, 2, 3, 4].map((item) => (
             <div key={item} className="bg-gray-800 rounded-lg p-[8px_10px_12px_10px]">
               <div className="flex items-center pb-4">
-                <img src="/images/brand/manufacturer.svg" alt="Manufacturer" className="h-6 W-9" />
+                <Image src="/images/brand/manufacturer.svg" alt="Manufacturer" className="h-6 W-9" />
                 <div>
                   <h3 className="text-[10px] font-[700] text-white">PG Games</h3>
                   <p className="text-[10px] font-[700] text-[#A7B5CA]">111 games</p>
@@ -580,7 +581,7 @@ const MainContent: React.FC = () => {
               </div>
               <div className="grid grid-cols-3 gap-2">
                 {brand.map((game) => (
-                  <img key={game} src={"/images/brand/"+game} alt="Game" className="w-full h-12 object-cover rounded" />
+                  <Image key={game} src={"/images/brand/"+game} alt="Game" className="w-full h-12 object-cover rounded" />
                 ))}
               </div>
             </div>
@@ -595,7 +596,7 @@ const MainContent: React.FC = () => {
           {[1, 2, 3, 4, 5, 6].map((item) => (
             <div key={item} className="bg-gray-800 rounded-lg overflow-hidden">
               <div className="relative">
-                <img src="/images/queen.png" alt="QUEEN OF BOUNTY" className="w-full object-cover" />
+                <Image src="/images/queen.png" alt="QUEEN OF BOUNTY" className="w-full object-cover" />
                 <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs px-2 py-1 rounded">HOT</div>
               </div>
               <div className="p-3">

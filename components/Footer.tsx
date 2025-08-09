@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
           <div className="w-[50%] md:col-span-2">
             {/* Logo */}
             <div className="flex items-center mb-4">
-                <img
+                <Image
                     src="/images/logo.svg"
                     alt="777 Gaming Logo"
                 />
@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
               <div className="flex flex-wrap gap-2">
                 {
                   coins.map((item) => <div className="flex items-center justify-center">
-                                        <img src={"/icons/coin-icon/"+item+'.svg'} className="w-8 h-8" alt="coin"/>
+                                        <Image src={"/icons/coin-icon/"+item+'.svg'} className="w-8 h-8" alt="coin"/>
                                       </div>)
                 }
               </div>
@@ -117,10 +117,10 @@ const Footer: React.FC = () => {
               <h4 className="text-white font-medium mb-3">Partners and Industry Associations</h4>
               <div className="flex gap-3">
                 <div>
-                  <img className="h-8" alt="brand" src="/images/brand/brand.svg"/>
+                  <Image className="h-8" alt="brand" src="/images/brand/brand.svg"/>
                 </div>
                 <div >
-                  <img src="/images/brand/18.svg" className="h-8" alt="18+"  />
+                  <Image src="/images/brand/18.svg" className="h-8" alt="18+"  />
                 </div>
               </div>
             </div>
@@ -131,7 +131,7 @@ const Footer: React.FC = () => {
                 {
                   socials.map(social => <>
                     <BlackButton className="px-2.5">
-                      <img className="h-4 w-4 " src={"/icons/social-icon/"+social+".svg"} alt="social" />
+                      <Image className="h-4 w-4 " src={"/icons/social-icon/"+social+".svg"} alt="social" />
                     </BlackButton>
                   </>)
                 }
@@ -147,11 +147,11 @@ const Footer: React.FC = () => {
             {/* Install App Banner */}
             <div className=" px-4 py-2 flex items-center justify-center gap-3">
               <div className="text-2xl">
-                <img src="/images/brand/cookie.svg" alt="cookie" />
+                <Image src="/images/brand/cookie.svg" alt="cookie" />
               </div>
               <div>
                 <div className="flex text-[#A7B5CA] text-sm font-medium"> Install 
-                  <img src="/images/logo.svg" className="h-[17px]" alt="logo" />{" "}
+                  <Image src="/images/logo.svg" className="h-[17px]" alt="logo" />{" "}
                    on the desktop</div>
               </div>
               <button className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm font-medium transition-colors">

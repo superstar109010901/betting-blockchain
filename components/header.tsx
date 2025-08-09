@@ -4,6 +4,8 @@ import React from "react";
 import BlackButton from "./buttons/black";
 import RedButton from "./buttons/red";
 import { useSidebar } from './providers/SidebarProvider';
+import Image from "next/image";
+
 const Header: React.FC = () => {
     const { toggleSidebar } = useSidebar();
 
@@ -16,13 +18,13 @@ const Header: React.FC = () => {
                     {/* Menu button with notification */}
                     <div className="relative">
                         <BlackButton onClick={toggleSidebar}>
-                            <img src={'/icons/arrow-to-right-stroke.svg'}  className="px-2.5" alt="burger" />
+                            <Image src={'/icons/arrow-to-right-stroke.svg'}  className="px-2.5" alt="burger" />
                         </BlackButton>
                     </div>
 
                     {/* 777 Logo Image */}
                     <div className="flex items-center">
-                        <img
+                        <Image
                             src="/images/logo.svg"
                             alt="777 Gaming Logo"
                         />
@@ -39,7 +41,7 @@ const Header: React.FC = () => {
                         paddingRight: "16px",
                         }}
                     >
-                        <img src={'/images/awards/Chest-box.svg'}  className="h-8" alt="burger" />
+                        <Image src={'/images/awards/Chest-box.svg'}  className="h-8" alt="burger" />
                         <span className="text-white font-medium text-xs">Bonuses</span>
                     </button>
                     {/* Notification badge overlapping the button */}
@@ -50,7 +52,7 @@ const Header: React.FC = () => {
 
                     {/* Search button */}
                     <BlackButton>
-                        <img src={'/icons/search.svg'}  className="px-2.5" alt="burger" />
+                        <Image src={'/icons/search.svg'}  className="px-2.5" alt="burger" />
                     </BlackButton>
                     
                 </div>
@@ -72,12 +74,12 @@ const Header: React.FC = () => {
 
                     {/* Language/Flag button */}
                     <BlackButton>
-                        <img src={'/icons/flag-icon/cn.svg'}  className="px-2.5 h-4" alt="burger" />
+                        <Image src={'/icons/flag-icon/cn.svg'}  className="px-2.5 h-4" alt="burger" />
                     </BlackButton>
 
                     {/* Chat/Support button */}
                     <BlackButton>
-                        <img src={'/icons/chat.svg'} className="px-2.5" alt="burger" />
+                        <Image src={'/icons/chat.svg'} className="px-2.5" alt="burger" />
                     </BlackButton>
                 </div>
                 </div>
