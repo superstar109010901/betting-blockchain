@@ -1,0 +1,372 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  username      String    @unique
+  avatar        String?
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  
+  // Subscription
+  subscriptionTier SubscriptionTier @default(FREE)
+  subscriptionStatus SubscriptionStatus @default(ACTIVE)
+  subscriptionStartDate DateTime?
+  subscriptionEndDate   DateTime?
+  stripeCustomerId String?
+  stripeSubscriptionId String?
+  
+  // Profile
+  phone         String?
+  country       String?
+  timezone      String?
+  preferences   Json?
+  
+  // Stats
+  totalTips     Int       @default(0)
+  successfulTips Int      @default(0)
+  totalWinnings Decimal   @default(0) @db.Decimal(10, 2)
+  successRate   Decimal   @default(0) @db.Decimal(5, 2)
+  
+  // Timestamps
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Relations
+  tips          Tip[]
+  forexSignals  ForexSignal[]
+  betSlips      BetSlip[]
+  notifications Notification[]
+  chatMessages  ChatMessage[]
+  communityPosts CommunityPost[]
+  influencerProfile InfluencerProfile?
+  affiliateStats AffiliateStats?
+  
+  @@map("users")
+}
+
+model Tip {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  
+  // Match details
+  sport       String
+  league      String
+  homeTeam    String
+  awayTeam    String
+  matchDate   DateTime
+  
+  // Tip details
+  tipType     TipType
+  tipValue    String
+  odds        Decimal  @db.Decimal(5, 2)
+  confidence  Int      // 0-100
+  stake       Decimal? @db.Decimal(10, 2)
+  
+  // Status
+  status      TipStatus @default(PENDING)
+  result      TipResult?
+  
+  // Data sources
+  dataSources Json?    // Array of data sources used
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  betSlips    BetSlip[]
+  
+  @@map("tips")
+}
+
+model ForexSignal {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  
+  // Signal details
+  pair        String   // e.g., "EUR/USD"
+  signalType  SignalType
+  entryPrice  Decimal  @db.Decimal(10, 5)
+  stopLoss    Decimal  @db.Decimal(10, 5)
+  takeProfit  Decimal  @db.Decimal(10, 5)
+  confidence  Int      // 0-100
+  
+  // Chart
+  chartImage  String?
+  
+  // Status
+  status      SignalStatus @default(PENDING)
+  result      SignalResult?
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("forex_signals")
+}
+
+model BetSlip {
+  id          String   @id @default(cuid())
+  name        String?
+  
+  // Bet details
+  totalOdds   Decimal  @db.Decimal(8, 2)
+  stake       Decimal  @db.Decimal(10, 2)
+  potentialWin Decimal @db.Decimal(10, 2)
+  
+  // Status
+  status      BetSlipStatus @default(PENDING)
+  
+  // Booking codes
+  betwayCode  String?
+  easybetCode String?
+  hollywoodCode String?
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tips        Tip[]
+  
+  @@map("bet_slips")
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  title       String
+  message     String
+  type        NotificationType
+  read        Boolean  @default(false)
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("notifications")
+}
+
+model ChatMessage {
+  id          String   @id @default(cuid())
+  content     String
+  messageType MessageType @default(TEXT)
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roomId      String
+  room        ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  
+  @@map("chat_messages")
+}
+
+model ChatRoom {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  type        RoomType
+  isPrivate   Boolean  @default(false)
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  messages    ChatMessage[]
+  
+  @@map("chat_rooms")
+}
+
+model CommunityPost {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  postType    PostType
+  
+  // Engagement
+  likes       Int      @default(0)
+  comments    Int      @default(0)
+  shares      Int      @default(0)
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("community_posts")
+}
+
+model InfluencerProfile {
+  id          String   @id @default(cuid())
+  bio         String?
+  specialties String[] // Array of specialties
+  followers   Int      @default(0)
+  verified    Boolean  @default(false)
+  
+  // Stats
+  totalTips   Int      @default(0)
+  successRate Decimal  @default(0) @db.Decimal(5, 2)
+  totalEarnings Decimal @default(0) @db.Decimal(10, 2)
+  
+  // Social media
+  twitter     String?
+  instagram   String?
+  youtube     String?
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("influencer_profiles")
+}
+
+model AffiliateStats {
+  id          String   @id @default(cuid())
+  
+  // Stats
+  referrals   Int      @default(0)
+  conversions Int      @default(0)
+  earnings    Decimal  @default(0) @db.Decimal(10, 2)
+  commissionRate Decimal @default(0.1) @db.Decimal(3, 2) // 10% default
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("affiliate_stats")
+}
+
+// Enums
+enum SubscriptionTier {
+  FREE
+  STARTER
+  PRO
+  ELITE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+  PAST_DUE
+}
+
+enum TipType {
+  MATCH_WINNER
+  OVER_UNDER
+  BOTH_TEAMS_SCORE
+  CORNERS
+  CARDS
+  PLAYER_STATS
+  CUSTOM
+}
+
+enum TipStatus {
+  PENDING
+  WON
+  LOST
+  VOID
+}
+
+enum TipResult {
+  WON
+  LOST
+  VOID
+  PENDING
+}
+
+enum SignalType {
+  BUY
+  SELL
+}
+
+enum SignalStatus {
+  PENDING
+  WON
+  LOST
+  VOID
+}
+
+enum SignalResult {
+  WON
+  LOST
+  VOID
+  PENDING
+}
+
+enum BetSlipStatus {
+  PENDING
+  PLACED
+  WON
+  LOST
+  CANCELLED
+}
+
+enum NotificationType {
+  TIP_UPDATE
+  ODDS_CHANGE
+  FOREX_SIGNAL
+  SYSTEM
+  PROMOTION
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  FILE
+  SYSTEM
+}
+
+enum RoomType {
+  GENERAL
+  LEAGUE
+  INFLUENCER
+  PRIVATE
+}
+
+enum PostType {
+  TIP_SHARE
+  ANALYSIS
+  DISCUSSION
+  NEWS
+} 
